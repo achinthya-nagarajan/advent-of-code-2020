@@ -324,22 +324,32 @@ map_slope = '''
 .#...#.#####....##..........##.
 '''.split()
 
-i = 0
-y = 3
-trees_hit = 0
-open_space = 0
+slopes = [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]]
+totals = [] 
 
-for row in map_slope:
-    if(i != 0):
-        if(row[y] == '#'):
-            trees_hit += 1
-        if(row[y] == '.'):
-            open_space += 1
-        y += 3 
-    if(y >= 31):
-        y = y - 31
-    i += 1
+for slope in slopes:
+    slope_x = slope[0]
+    slope_y = slope[1]
+    slope_tree_count = 0
+    current_col = slope_x
+    current_row = slope_y
+    count = 0
 
-print(f"Trees Hit: {trees_hit}")
-print(f"Blank Spaces: {open_space}")
-    
+    for row in map_slope:
+        if(current_row == count):
+            if(row[current_col] == '#'):
+                slope_tree_count += 1
+            current_col += slope_x
+            current_row += slope_y
+        if(current_col >= 31):
+            current_col -= 31
+        count += 1
+
+    totals.append(slope_tree_count)
+
+part_two_total = 1
+for t in totals:
+    part_two_total = part_two_total * t
+
+print(f"Part 1 --- Trees Hit: {totals[1]}")
+print(f"Part 2 --- Total Trees Hit: {part_two_total}")
