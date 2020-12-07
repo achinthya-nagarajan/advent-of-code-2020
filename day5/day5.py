@@ -53,10 +53,25 @@ def get_seat_ids(boarding_passes):
     seat_ids.sort()
     return seat_ids
 
-# ----- Testing ------------------------------------
+# ----- Part 1: Testing ----------------------------
 # boarding_pass_test = ['FBFBBFFRLR', 'BFFFBBFRRR', 'FFFBBBFRRR', 'BBFFBBFRLL']
 # seat_ids = get_seat_ids(boarding_pass_test)
 # --------------------------------------------------
 
+def find_my_seat_id(sorted_seat_ids):
+    lowest_seat_id = sorted_seat_ids[0]
+    highest_seat_id = sorted_seat_ids[-1]
+    my_seat_id = None
+
+    for seat_id in range(lowest_seat_id, highest_seat_id):
+        if seat_id not in sorted_seat_ids:
+            my_seat_id = seat_id
+    
+    return my_seat_id
+
+
 seat_ids = get_seat_ids(boarding_pass_raw)
+my_seat_id = find_my_seat_id(seat_ids)
+
 print(f"Part 1 -- Highest Seat ID: {seat_ids[-1]}")
+print(f"Part 2 -- My Seat ID: {my_seat_id}")
