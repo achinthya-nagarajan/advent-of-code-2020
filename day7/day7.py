@@ -1,8 +1,6 @@
 import re
-from collections import Counter 
 
 baggage_regulations_raw = open('puzzle_input.txt', 'r').read().split('\n')
-
 baggage_regulations_test = """light red bags contain 1 bright white bag, 2 muted yellow bags.
 dark orange bags contain 3 bright white bags, 4 muted yellow bags.
 bright white bags contain 1 shiny gold bag.
@@ -23,7 +21,7 @@ def build_regulation_tree(baggage_regulations_raw):
       for nb in nested_bags:
          if(nb != 'no other bags'):
             sub_match = re.findall("(\d+) ([a-z]+ [a-z]+) bags?", nb)[0]
-            # amount = sub_match[0]
+            amount = sub_match[0]
             sub_value = sub_match[1]
             sub_tree[sub_value] = None
          else:
@@ -71,7 +69,6 @@ def count_frequency(my_list):
          count += 1
 
    return count
-
 
 regulations_tree = build_regulation_tree(baggage_regulations_raw)
 parsed_tree = parse_regulations(regulations_tree)
