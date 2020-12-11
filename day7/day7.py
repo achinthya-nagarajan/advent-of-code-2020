@@ -81,7 +81,7 @@ def pretty_print(d, indent=0):
       else:
          print('\t' * (indent+1) + str(value))
 
-pretty_print(regulations_tree)
+# pretty_print(regulations_tree)
 shiny_freq_count = count_frequency(parsed_tree)
 
 print(f"Part 1 -- Bags that can contain a shiny gold: {shiny_freq_count}")
