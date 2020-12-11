@@ -18,7 +18,7 @@ def run(instructions):
 
     while True:
         if(current_line >= len(copy_of_instructions)):
-            #If our game gets to one line after our game, it terminated properly
+            #If our game gets to one line after our game instruction length, it terminated properly
             game_terminates = True
             break
         
@@ -27,10 +27,10 @@ def run(instructions):
         instruction_ran_already = copy_of_instructions[current_line][2]
 
         if(instruction_ran_already):
-            # Woops, we looping!
+            # Prevent infinite loop
             break
         else:
-            # Mark the line as ran already to prevent loops
+            # Mark the line as ran already to prevent infinite loops
             copy_of_instructions[current_line][2] = True
 
             if(operation == 'nop'):
@@ -74,5 +74,5 @@ p1_results = run(game_instructions)
 p2_indexes = find_all_nop_and_jmp_indexes(game_instructions)
 p2_results = find_terminating_game(p2_indexes, game_instructions)
 
-print(f"Part 1 -- {p1_results[0]}") #1709
+print(f"Part 1 -- {p1_results[0]}")
 print(f"Part 2 -- {p2_results[0]}")
