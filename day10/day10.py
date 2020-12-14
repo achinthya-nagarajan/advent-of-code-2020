@@ -10,6 +10,6 @@ joltage_test = """16
 19
 6
 12
-4"""
+4""".split('\n')
 
-print(joltage_raw)
+print(joltage_test)
