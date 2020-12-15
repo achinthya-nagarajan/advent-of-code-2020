@@ -1,0 +1,2 @@
+Part 1 Test -- Expected: 25, Got: 25
+Part 1: 552
