@@ -15,11 +15,12 @@ def simulate_directions(directions):
     for d in directions:
         direction = d[:1]
         amount = int(d[1:])
-        # print(f"{direction}{amount}: {current_direction} -- North: {n}, East: {e}, South: {s}, West: {w}")
+        print(f"{direction}{amount}: {current_direction} -- North: {n}, East: {e}, South: {s}, West: {w}")
         if(direction == 'F'):
             if(current_direction == 0 or current_direction == 360):
                 if(s != 0):
                     new_amount = max(amount, s) - min(amount, s)
+                    # If South is much greater than the N amount, we may not want to reset S to 0, this applies to all directions
                     s = 0
                     n += new_amount
                 else:
@@ -82,7 +83,7 @@ def simulate_directions(directions):
             if(current_direction < 0):
                 current_direction = 360 + current_direction
 
-    # print(n, e, s, w)
+    print(n, e, s, w)
     return (n + s) + (e + w)
 
 p1_answer_test = simulate_directions(directions_test)
