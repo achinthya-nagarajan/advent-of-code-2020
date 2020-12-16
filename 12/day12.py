@@ -5,7 +5,7 @@ F7
 R90
 F11""".split('\n')
 
-def simulate_directions(directions):
+def p1_simulate_directions(directions):
     current_direction = 90
     n = 0 #North
     e = 0 #East
@@ -101,8 +101,39 @@ def simulate_directions(directions):
     # print(n, e, s, w)
     return (n + s) + (e + w)
 
-p1_answer_test = simulate_directions(directions_test)
-p1_answer = simulate_directions(directions_raw)
+def p2_simulate_directions(directions):
+    waypoint = {'N': 1, 'E': 10, 'S': 0, 'W': 0}
+    ship = {'N': 0, 'E': 0, 'S': 0, 'W': 0}
+
+    for d in directions:
+        direction = d[:1]
+        amount = int(d[1:])
+
+        if direction == 'N' or direction == 'E' or direction == 'S' or direction == 'W':
+            waypoint[direction] += amount
+        elif direction == 'R' or direction == 'L':
+            # 
+            print(direction)
+            print(amount)
+        elif direction == 'F':
+            # get waypoint coords and multiple by amount and then add that to ship
+            new_ship = {'N': 0, 'E': 0, 'S': 0, 'W': 0}
+        
+
+    return (ship['N'] + ship['S']) + (ship['E'] + ship['W'])
+
+
+
+
+
+
+
+p1_answer_test = p1_simulate_directions(directions_test)
+p1_answer = p1_simulate_directions(directions_raw)
+p2_answer_test = p2_simulate_directions(directions_test)
+p2_answer = p2_simulate_directions(directions_raw)
 
 print(f"Part 1 Test -- Expected: 25, Got: {p1_answer_test}")
 print(f"Part 1 -- {p1_answer}") 
+print(f"Part 2 Test -- Expected: 25, Got: {p2_answer_test}")
+print(f"Part 2 -- {p2_answer}") 
