@@ -206,10 +206,10 @@ def p2_simulate_directions(directions):
                     else: 
                         ship[1] += (waypoint[1] * amount)
 
-        # print(f"{direction}{amount}")
-        # print(f"WP: {waypoint}")
-        # print(f"SP: {ship}")
-        # print("---------------------------")
+        print(f"{direction}{amount}")
+        print(f"WP: {waypoint}")
+        print(f"SP: {ship}")
+        print("---------------------------")
 
     return (ship[0] + ship[2]) + (ship[1] + ship[3])
 
