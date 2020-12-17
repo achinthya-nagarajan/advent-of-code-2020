@@ -115,77 +115,110 @@ def p2_simulate_directions(directions):
         direction = d[:1]
         amount = int(d[1:])
 
-        if(direction == 'N'):
-            waypoint[0] += amount
-        elif(direction == 'E'):
-            waypoint[1] += amount
-        elif(direction == 'S'):
-            waypoint[2] += amount
-        elif(direction == 'W'):
-            waypoint[3] += amount
+        if direction == 'N':
+            if waypoint[2] != 0:
+                if waypoint[2] > amount:
+                    waypoint[2] -= amount
+                else:
+                    waypoint[0] +=  amount - waypoint[2]
+                    waypoint[2] = 0
+            else: 
+                waypoint[0] += amount
+        elif direction == 'E':
+            if waypoint[3] != 0:
+                if waypoint[3] > amount:
+                    waypoint[3] -= amount
+                else:
+                    waypoint[1] +=  amount - waypoint[3]
+                    waypoint[3] = 0
+            else: 
+                waypoint[1] += amount
+        elif direction == 'S':
+            if waypoint[0] != 0:
+                if waypoint[0] > amount:
+                    waypoint[0] -= amount
+                else:
+                    waypoint[2] +=  amount - waypoint[0]
+                    waypoint[0] = 0
+            else: 
+                waypoint[2] += amount
+        elif direction == 'W':
+            if waypoint[1] != 0:
+                if waypoint[1] > amount:
+                    waypoint[1] -= amount
+                else:
+                    waypoint[3] += amount - waypoint[1]
+                    waypoint[1] = 0
+            else: 
+                waypoint[3] += amount
         elif direction == 'R':
             shift_amount = round(amount / 90)
             waypoint = shift(waypoint, shift_amount, 'right')
         elif direction == 'L':
             shift_amount = round(amount / 90)
-            print(shift_amount)
             waypoint = shift(waypoint, shift_amount, 'left')
         elif direction == 'F':
-            if waypoint[0] == 0:
-                # Going south
-                if ship[0] != 0:
-                    if ship[0] > (waypoint[2] * amount):
-                        ship[0] = ship[0] - (waypoint[2] * amount)
-                    else:
-                        ship[2] += (waypoint[2] * amount) - ship[0]
-                        ship[0] = 0
-                else: 
-                    ship[2] += amount
+            if sum(ship) == 0:
+                ship[0] = waypoint[0] * amount
+                ship[1] = waypoint[1] * amount
+                ship[2] = waypoint[2] * amount
+                ship[3] = waypoint[3] * amount
             else:
-                # Going north
-                if ship[2] != 0:
-                    if ship[2] > (waypoint[0] * amount):
-                        ship[2] = ship[2] - (waypoint[0] * amount)
-                    else:
-                        ship[0] += (waypoint[0] * amount) - ship[2]
-                        ship[2] = 0
-                else: 
-                    ship[0] += amount
+                if waypoint[0] == 0:
+                    # Going south
+                    if ship[0] != 0:
+                        if ship[0] > (waypoint[2] * amount):
+                            ship[0] = ship[0] - (waypoint[2] * amount)
+                        else:
+                            ship[2] += (waypoint[2] * amount) - ship[0]
+                            ship[0] = 0
+                    else: 
+                        ship[2] += (waypoint[2] * amount)
+                else:
+                    # Going north
+                    if ship[2] != 0:
+                        if ship[2] > (waypoint[0] * amount):
+                            ship[2] = ship[2] - (waypoint[0] * amount)
+                        else:
+                            ship[0] += (waypoint[0] * amount) - ship[2]
+                            ship[2] = 0
+                    else: 
+                        ship[0] += (waypoint[0] * amount)
 
-            if waypoint[1] == 0:
-                # Going west
-                if ship[1] != 0:
-                    if ship[1] > (waypoint[3] * amount):
-                        ship[1] = ship[1] - (waypoint[3] * amount)
-                    else:
-                        ship[3] += (waypoint[3] * amount) - ship[1]
-                        ship[1] = 0
-                else: 
-                    ship[3] += amount
-            else:
-                # Going north
-                if ship[3] != 0:
-                    if ship[3] > (waypoint[1] * amount):
-                        ship[3] = ship[3] - (waypoint[1] * amount)
-                    else:
-                        ship[1] += (waypoint[1] * amount) - ship[3]
-                        ship[3] = 0
-                else: 
-                    ship[1] += amount
+                if waypoint[1] == 0:
+                    # Going west
+                    if ship[1] != 0:
+                        if ship[1] > (waypoint[3] * amount):
+                            ship[1] = ship[1] - (waypoint[3] * amount)
+                        else:
+                            ship[3] += (waypoint[3] * amount) - ship[1]
+                            ship[1] = 0
+                    else: 
+                        ship[3] += (waypoint[3] * amount)
+                else:
+                    # Going north
+                    if ship[3] != 0:
+                        if ship[3] > (waypoint[1] * amount):
+                            ship[3] = ship[3] - (waypoint[1] * amount)
+                        else:
+                            ship[1] += (waypoint[1] * amount) - ship[3]
+                            ship[3] = 0
+                    else: 
+                        ship[1] += (waypoint[1] * amount)
 
-        print(f"{direction}{amount}")
-        print(f"WP: {waypoint}")
-        print(f"SP: {ship}")
-        print("---------------------------")
+        # print(f"{direction}{amount}")
+        # print(f"WP: {waypoint}")
+        # print(f"SP: {ship}")
+        # print("---------------------------")
 
     return (ship[0] + ship[2]) + (ship[1] + ship[3])
 
 p1_answer_test = p1_simulate_directions(directions_test)
 p1_answer = p1_simulate_directions(directions_raw)
 p2_answer_test = p2_simulate_directions(directions_test)
-# p2_answer = p2_simulate_directions(directions_raw)
+p2_answer = p2_simulate_directions(directions_raw)
 
 print(f"Part 1 Test -- Expected: 25, Got: {p1_answer_test}")
 print(f"Part 1 -- {p1_answer}") 
 print(f"Part 2 Test -- Expected: 286, Got: {p2_answer_test}")
-# print(f"Part 2 -- {p2_answer}") 
+print(f"Part 2 -- {p2_answer}") 
