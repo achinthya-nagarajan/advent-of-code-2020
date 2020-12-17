@@ -5,6 +5,12 @@ F7
 R90
 F11""".split('\n')
 
+def shift(l, n, d):
+    if d == 'left':
+        return l[n:] + l[:n]
+    elif d == 'right': 
+        return l[-n:] + l[:-n]
+
 def p1_simulate_directions(directions):
     current_direction = 90
     n = 0 #North
@@ -102,38 +108,84 @@ def p1_simulate_directions(directions):
     return (n + s) + (e + w)
 
 def p2_simulate_directions(directions):
-    waypoint = {'N': 1, 'E': 10, 'S': 0, 'W': 0}
-    ship = {'N': 0, 'E': 0, 'S': 0, 'W': 0}
+    waypoint = [1, 10, 0, 0] # N, E, S, W
+    ship = [0, 0, 0, 0] # N, E, S, W
 
     for d in directions:
         direction = d[:1]
         amount = int(d[1:])
 
-        if direction == 'N' or direction == 'E' or direction == 'S' or direction == 'W':
-            waypoint[direction] += amount
-        elif direction == 'R' or direction == 'L':
-            # 
-            print(direction)
-            print(amount)
+        if(direction == 'N'):
+            waypoint[0] += amount
+        elif(direction == 'E'):
+            waypoint[1] += amount
+        elif(direction == 'S'):
+            waypoint[2] += amount
+        elif(direction == 'W'):
+            waypoint[3] += amount
+        elif direction == 'R':
+            shift_amount = round(amount / 90)
+            waypoint = shift(waypoint, shift_amount, 'right')
+        elif direction == 'L':
+            shift_amount = round(amount / 90)
+            print(shift_amount)
+            waypoint = shift(waypoint, shift_amount, 'left')
         elif direction == 'F':
-            # get waypoint coords and multiple by amount and then add that to ship
-            new_ship = {'N': 0, 'E': 0, 'S': 0, 'W': 0}
-        
+            if waypoint[0] == 0:
+                # Going south
+                if ship[0] != 0:
+                    if ship[0] > (waypoint[2] * amount):
+                        ship[0] = ship[0] - (waypoint[2] * amount)
+                    else:
+                        ship[2] += (waypoint[2] * amount) - ship[0]
+                        ship[0] = 0
+                else: 
+                    ship[2] += amount
+            else:
+                # Going north
+                if ship[2] != 0:
+                    if ship[2] > (waypoint[0] * amount):
+                        ship[2] = ship[2] - (waypoint[0] * amount)
+                    else:
+                        ship[0] += (waypoint[0] * amount) - ship[2]
+                        ship[2] = 0
+                else: 
+                    ship[0] += amount
 
-    return (ship['N'] + ship['S']) + (ship['E'] + ship['W'])
+            if waypoint[1] == 0:
+                # Going west
+                if ship[1] != 0:
+                    if ship[1] > (waypoint[3] * amount):
+                        ship[1] = ship[1] - (waypoint[3] * amount)
+                    else:
+                        ship[3] += (waypoint[3] * amount) - ship[1]
+                        ship[1] = 0
+                else: 
+                    ship[3] += amount
+            else:
+                # Going north
+                if ship[3] != 0:
+                    if ship[3] > (waypoint[1] * amount):
+                        ship[3] = ship[3] - (waypoint[1] * amount)
+                    else:
+                        ship[1] += (waypoint[1] * amount) - ship[3]
+                        ship[3] = 0
+                else: 
+                    ship[1] += amount
 
+        print(f"{direction}{amount}")
+        print(f"WP: {waypoint}")
+        print(f"SP: {ship}")
+        print("---------------------------")
 
-
-
-
-
+    return (ship[0] + ship[2]) + (ship[1] + ship[3])
 
 p1_answer_test = p1_simulate_directions(directions_test)
 p1_answer = p1_simulate_directions(directions_raw)
 p2_answer_test = p2_simulate_directions(directions_test)
-p2_answer = p2_simulate_directions(directions_raw)
+# p2_answer = p2_simulate_directions(directions_raw)
 
 print(f"Part 1 Test -- Expected: 25, Got: {p1_answer_test}")
 print(f"Part 1 -- {p1_answer}") 
-print(f"Part 2 Test -- Expected: 25, Got: {p2_answer_test}")
-print(f"Part 2 -- {p2_answer}") 
+print(f"Part 2 Test -- Expected: 286, Got: {p2_answer_test}")
+# print(f"Part 2 -- {p2_answer}") 
