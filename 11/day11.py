@@ -11,4 +11,14 @@ LLLLLLLLLL
 L.LLLLLL.L
 L.LLLLL.LL"""
 
-print(seats_raw)
+seat_array = []
+
+for l in seats_test.split('\n'):
+    seat_array.append(l)
+
+for seat_line in seat_array:
+    for seat in seat_line:
+        seat_status = 0
+            for seat_line in seat_array:
+                for seat in seat_line:
+
