@@ -1,5 +1,8 @@
 bus_times = open('puzzle_input.txt').read().split('\n')
 
+bus_test = """939
+7,13,x,x,59,x,31,19""".split('\n')
+
 earliest_departure_time = int(bus_times[0])
 bus_ids = []
 
@@ -11,25 +14,31 @@ for bus_id in bus_times[1].split(','):
 
 earliest_times = {}
 
-# print(earliest_departure_time)
-
 for count, item in enumerate(bus_ids):
-    amount = 0
+    amount = item
+    n = 1 
     while amount < earliest_departure_time:
-        amount += item * (count + 1)
-    earliest_times[item] = amount
+        if(amount < earliest_departure_time):
+            amount = item * n
+            n += 1
+            earliest_times[item] = amount
 
-earliest_time = earliest_times[bus_ids[0]] - earliest_departure_time
+answer_bus_id = bus_ids[0]
+answer_time_difference = earliest_times[bus_ids[0]] - earliest_departure_time
 answer = 0
+found_lower = False
 
-print(earliest_time)
-
-for count, time in enumerate(earliest_times):
+for count, bus_id in enumerate(earliest_times):
     if count != 0 and count != len(earliest_times):
-        t1 = earliest_times[time] - earliest_departure_time
-        if t1 < earliest_time:
-            earliest_time = time
-            answer = time * t1
+        time_difference = earliest_times[bus_id] - earliest_departure_time
+        if time_difference < answer_time_difference:
+            answer_time_difference = time_difference
+            answer_bus_id = bus_id
+            answer = time_difference * bus_id 
+            found_lower = True
+
+if(found_lower == False):
+    answer = answer_time_difference * answer_bus_id
 
 print(f"Part 1: {answer}")
 
