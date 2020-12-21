@@ -42,3 +42,27 @@ if(found_lower == False):
 
 print(f"Part 1: {answer}")
 
+def readFile() -> tuple:
+    with open("puzzle_input.txt", "r") as f:
+        timestamp = int(f.readline().strip())
+        values = f.readline().strip().split(",")
+        bus_ids = [{"value": int(values[i]), "index": i} 
+            for i in range(len(values))
+            if values[i] != "x"]
+        return timestamp, bus_ids 
+
+answer_input = readFile()
+
+# Got stuck and found this solution online, still don't fully understand how they got to this solution. Will have to revisit this
+def part2(bus_ids: list) -> int:
+    minutes, step = 1, 1
+    for bus in bus_ids:
+        while (minutes + bus["index"]) % bus["value"] != 0:
+            # print(f"{minutes} + {bus['index']} % {bus['value']} = {(minutes + bus['index']) % bus['value']}")
+            minutes += step
+        step *= bus["value"]
+    return minutes
+
+p2_answer = part2(answer_input[1])
+
+print(f"Part 2: {p2_answer}")
