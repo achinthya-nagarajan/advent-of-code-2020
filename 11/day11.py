@@ -124,6 +124,8 @@ while p2_something_changed == True:
                             if(top_left_seat != '.'):
                                 break
                             try:
+                                if(p2_line_index - tli < 0 or p2_seat_index - tli > len(p2_seat_line)):
+                                    break
                                 top_left_seat = p2_seat_test[p2_line_index - tli][p2_seat_index - tli]
                                 tli += 1
                             except IndexError:
@@ -137,6 +139,8 @@ while p2_something_changed == True:
                         if(top_middle_seat != '.'):
                             break
                         try:
+                            if(p2_line_index - tmi < 0):
+                                break
                             top_middle_seat = p2_seat_test[p2_line_index - tmi][p2_seat_index]
                             tmi += 1
                         except IndexError:
@@ -151,6 +155,8 @@ while p2_something_changed == True:
                             if(top_right_seat != '.'):
                                 break
                             try:
+                                if(p2_line_index - tri < 0 or p2_seat_index + tri > len(p2_seat_line)):
+                                    break
                                 top_right_seat = p2_seat_test[p2_line_index - tri][p2_seat_index + tri]
                                 tri += 1
                             except IndexError:
@@ -208,7 +214,7 @@ while p2_something_changed == True:
                         if(bottom_middle_seat != '.'):
                             break
                         try: 
-                            bottom_middle_seat = p2_seat_test[p2_line_index - bmi][p2_seat_index]
+                            bottom_middle_seat = p2_seat_test[p2_line_index + bmi][p2_seat_index]
                             bmi += 1
                         except IndexError:
                             break
@@ -228,7 +234,9 @@ while p2_something_changed == True:
                                 break
                     p2_adjacent_seats[2][2] = bottom_right_seat
 
-            # pp(p2_adjacent_seats)
+            # if(p2_amount_of_changes == 2 and p2_line_index == 5 and p2_seat_index == 9):
+            #     print(p2_seat)
+            #     pp(p2_adjacent_seats)
             p2_flattened = flatten(p2_adjacent_seats)
 
             if(p2_seat == 'L'):
@@ -239,15 +247,15 @@ while p2_something_changed == True:
                     p2_copy_of_seats[p2_line_index][p2_seat_index] = 'L'
 
     p2_amount_of_changes += 1
+
     print(f"LAYOUT: {p2_amount_of_changes} ----------------------------")
-    pp(p2_seat_test)
+    pp(p2_copy_of_seats)
 
     if(p2_seat_test == p2_copy_of_seats):
-        print('Nothing changed?')
-        # pp(p2_copy_of_seats)
         p2_something_changed = False
     else:
         p2_seat_test = copy.deepcopy(p2_copy_of_seats)
 
 p2_occupied_seats = flatten(p2_copy_of_seats).count('#')
 print(f"""Part 2 Answer: {p2_occupied_seats}""")
+# 2047 close
