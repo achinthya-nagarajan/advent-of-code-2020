@@ -234,9 +234,9 @@ while p2_something_changed == True:
                                 break
                     p2_adjacent_seats[2][2] = bottom_right_seat
 
-            # if(p2_amount_of_changes == 2 and p2_line_index == 5 and p2_seat_index == 9):
-            #     print(p2_seat)
-            #     pp(p2_adjacent_seats)
+            if(p2_amount_of_changes == 4 and p2_line_index == 4 and p2_seat_index == 0):
+                print(p2_seat)
+                pp(p2_adjacent_seats)
             p2_flattened = flatten(p2_adjacent_seats)
 
             if(p2_seat == 'L'):
